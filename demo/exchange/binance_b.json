@@ -1,0 +1,315 @@
+{
+ "wallet_balance": 4100.0,
+ "positions": [
+  {
+   "symbol": "BTCUSDT",
+   "positionSide": "LONG",
+   "positionAmt": "0",
+   "entryPrice": "0"
+  },
+  {
+   "symbol": "BTCUSDT",
+   "positionSide": "SHORT",
+   "positionAmt": "-0.030",
+   "entryPrice": "84670.3"
+  },
+  {
+   "symbol": "ETHUSDT",
+   "positionSide": "LONG",
+   "positionAmt": "0",
+   "entryPrice": "0"
+  },
+  {
+   "symbol": "ETHUSDT",
+   "positionSide": "SHORT",
+   "positionAmt": "0",
+   "entryPrice": "0"
+  }
+ ],
+ "open_stops": [
+  {
+   "algoId": 9101,
+   "symbol": "BTCUSDT",
+   "positionSide": "SHORT",
+   "side": "BUY",
+   "quantity": "0.020",
+   "triggerPrice": "87266.8",
+   "algoStatus": "NEW"
+  },
+  {
+   "algoId": 8800,
+   "symbol": "ETHUSDT",
+   "positionSide": "LONG",
+   "side": "SELL",
+   "quantity": "0",
+   "triggerPrice": "2310.0",
+   "algoStatus": "NEW"
+  }
+ ],
+ "income": [
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790323200000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790352000000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790380800000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790409600000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790438400000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790467200000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790496000000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790524800000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790553600000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790582400000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790611200000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790640000000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790668800000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790697600000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790726400000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790755200000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790784000000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790812800000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790841600000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790870400000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790899200000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790928000000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790956800000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1790985600000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1791014400000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1791043200000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1791072000000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1791100800000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1791129600000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1791158400000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1791187200000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1791216000000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1791244800000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1685",
+   "time": 1791273600000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "COMMISSION",
+   "income": "-0.4274",
+   "time": 1791279660000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.2540",
+   "time": 1791302400000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.2540",
+   "time": 1791331200000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.2540",
+   "time": 1791360000000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.2540",
+   "time": 1791388800000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.2540",
+   "time": 1791417600000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.2540",
+   "time": 1791446400000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.2540",
+   "time": 1791475200000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.2540",
+   "time": 1791504000000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.2540",
+   "time": 1791532800000
+  }
+ ]
+}

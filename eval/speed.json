@@ -1,0 +1,146 @@
+{
+ "gemma4:e2b": {
+  "model": "gemma4:e2b",
+  "size_gb": 1.9,
+  "gpu_share": 1.0,
+  "load_s": 3.8,
+  "prompt_tokens": 3503,
+  "out_tokens": 256,
+  "prompt_tok_s": 7627,
+  "gen_tok_s": 118.9,
+  "gen_tok_s_runs": [
+   118.9,
+   121.0,
+   118.9
+  ],
+  "wall_s": 14
+ },
+ "gemma4:e4b": {
+  "model": "gemma4:e4b",
+  "size_gb": 3.4,
+  "gpu_share": 1.0,
+  "load_s": 4.3,
+  "prompt_tokens": 3503,
+  "out_tokens": 256,
+  "prompt_tok_s": 4581,
+  "gen_tok_s": 69.0,
+  "gen_tok_s_runs": [
+   69.3,
+   69.0,
+   68.2
+  ],
+  "wall_s": 23
+ },
+ "gemma4:12b-it-qat": {
+  "model": "gemma4:12b-it-qat",
+  "size_gb": 8.0,
+  "gpu_share": 1.0,
+  "load_s": 6.2,
+  "prompt_tokens": 3507,
+  "out_tokens": 256,
+  "prompt_tok_s": 2008,
+  "gen_tok_s": 31.8,
+  "gen_tok_s_runs": [
+   32.2,
+   31.8,
+   31.7
+  ],
+  "wall_s": 46
+ },
+ "gemma4:12b": {
+  "model": "gemma4:12b",
+  "size_gb": 1.4,
+  "gpu_share": 1.0,
+  "load_s": 8.0,
+  "prompt_tokens": 3507,
+  "out_tokens": 256,
+  "prompt_tok_s": 1733,
+  "gen_tok_s": 76.3,
+  "gen_tok_s_runs": [
+   76.3,
+   77.6,
+   76.3
+  ],
+  "wall_s": 31
+ },
+ "gemma4:12b-it-q8_0": {
+  "model": "gemma4:12b-it-q8_0",
+  "size_gb": 13.4,
+  "gpu_share": 1.0,
+  "load_s": 9.0,
+  "prompt_tokens": 3507,
+  "out_tokens": 256,
+  "prompt_tok_s": 1850,
+  "gen_tok_s": 19.0,
+  "gen_tok_s_runs": [
+   19.1,
+   19.0,
+   18.9
+  ],
+  "wall_s": 71
+ },
+ "gemma4:26b-a4b-it-qat": {
+  "model": "gemma4:26b-a4b-it-qat",
+  "size_gb": 15.9,
+  "gpu_share": 0.84,
+  "load_s": 16.3,
+  "prompt_tokens": 3507,
+  "out_tokens": 256,
+  "prompt_tok_s": 1710,
+  "gen_tok_s": 56.4,
+  "gen_tok_s_runs": [
+   56.4,
+   59.1,
+   53.6
+  ],
+  "wall_s": 43
+ },
+ "qwen3:8b": {
+  "model": "qwen3:8b",
+  "size_gb": 7.5,
+  "gpu_share": 1.0,
+  "load_s": 4.5,
+  "prompt_tokens": 3455,
+  "out_tokens": 256,
+  "prompt_tok_s": 3218,
+  "gen_tok_s": 45.9,
+  "gen_tok_s_runs": [
+   45.9,
+   45.9,
+   45.8
+  ],
+  "wall_s": 32
+ },
+ "qwen3:14b": {
+  "model": "qwen3:14b",
+  "size_gb": 11.8,
+  "gpu_share": 1.0,
+  "load_s": 6.2,
+  "prompt_tokens": 3455,
+  "out_tokens": 256,
+  "prompt_tok_s": 1739,
+  "gen_tok_s": 26.8,
+  "gen_tok_s_runs": [
+   26.9,
+   26.8,
+   26.6
+  ],
+  "wall_s": 53
+ },
+ "qwen3.8:27b": {
+  "model": "qwen3.8:27b",
+  "size_gb": 18.4,
+  "gpu_share": 0.67,
+  "load_s": 15.2,
+  "prompt_tokens": 3325,
+  "out_tokens": 256,
+  "prompt_tok_s": 413,
+  "gen_tok_s": 9.3,
+  "gen_tok_s_runs": [
+   10.1,
+   9.3,
+   9.1
+  ],
+  "wall_s": 158
+ }
+}

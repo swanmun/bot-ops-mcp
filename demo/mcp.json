@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "bot-ops-demo": {
+      "command": "python",
+      "args": ["run_server.py"],
+      "env": {"BOT_OPS_DEMO": "1"}
+    }
+  }
+}

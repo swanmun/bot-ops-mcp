@@ -1,0 +1,6 @@
+{
+ "now_utc": "2026-10-09 15:20",
+ "log_tz_name": "KST",
+ "log_utc_offset_hours": 9,
+ "note": "demo mode treats this moment as 'now' so answers do not drift; logs are in server local time"
+}

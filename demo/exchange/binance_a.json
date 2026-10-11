@@ -1,0 +1,771 @@
+{
+ "wallet_balance": 9200.0,
+ "positions": [
+  {
+   "symbol": "BTCUSDT",
+   "positionSide": "LONG",
+   "positionAmt": "0",
+   "entryPrice": "0"
+  },
+  {
+   "symbol": "BTCUSDT",
+   "positionSide": "SHORT",
+   "positionAmt": "-0.014",
+   "entryPrice": "82419.8"
+  },
+  {
+   "symbol": "ETHUSDT",
+   "positionSide": "LONG",
+   "positionAmt": "0",
+   "entryPrice": "0"
+  },
+  {
+   "symbol": "ETHUSDT",
+   "positionSide": "SHORT",
+   "positionAmt": "-0.271",
+   "entryPrice": "2529.51"
+  }
+ ],
+ "open_stops": [
+  {
+   "algoId": 9004,
+   "symbol": "BTCUSDT",
+   "positionSide": "SHORT",
+   "side": "BUY",
+   "quantity": "0.014",
+   "triggerPrice": "85643.3",
+   "algoStatus": "NEW"
+  },
+  {
+   "algoId": 9003,
+   "symbol": "ETHUSDT",
+   "positionSide": "SHORT",
+   "side": "BUY",
+   "quantity": "0.271",
+   "triggerPrice": "2699.14",
+   "algoStatus": "NEW"
+  }
+ ],
+ "income": [
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "COMMISSION",
+   "income": "-0.6196",
+   "time": 1789735937000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1789747200000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1789776000000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1789804800000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1789833600000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1789862400000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1789891200000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1789920000000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1789948800000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1789977600000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "COMMISSION",
+   "income": "-0.3331",
+   "time": 1789978720000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790006400000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790006400000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790035200000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790035200000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790064000000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790064000000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790092800000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790092800000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790121600000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790121600000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790150400000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790150400000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790179200000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790179200000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790208000000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790208000000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790236800000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790236800000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790265600000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790265600000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790294400000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790294400000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790323200000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790323200000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790352000000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790352000000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790380800000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790380800000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790409600000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790409600000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790438400000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790438400000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790467200000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790467200000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790496000000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790496000000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790524800000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790524800000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790553600000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790553600000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790582400000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790582400000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790611200000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790611200000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790640000000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790640000000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790668800000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790668800000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790697600000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790697600000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790726400000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790726400000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790755200000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790755200000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790784000000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790784000000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790812800000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790812800000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790841600000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790841600000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790870400000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790870400000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790899200000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790899200000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790928000000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790928000000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790956800000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790956800000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1790985600000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1790985600000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1791014400000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1791014400000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1791043200000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1791043200000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1791072000000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1791072000000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1791100800000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1791100800000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1791129600000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1791129600000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1791158400000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1791158400000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1791187200000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1791187200000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1791216000000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1791216000000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1791244800000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1791244800000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1791273600000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1791273600000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1791302400000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1791302400000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1791331200000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1791331200000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.0666",
+   "time": 1791360000000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "-0.1239",
+   "time": 1791360000000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "REALIZED_PNL",
+   "income": "1.8232",
+   "time": 1791362842000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "COMMISSION",
+   "income": "-0.3340",
+   "time": 1791362842000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "REALIZED_PNL",
+   "income": "28.7287",
+   "time": 1791366789000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "COMMISSION",
+   "income": "-0.6340",
+   "time": 1791366789000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "COMMISSION",
+   "income": "-0.5769",
+   "time": 1791432552000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1154",
+   "time": 1791446400000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "COMMISSION",
+   "income": "-0.3427",
+   "time": 1791448361000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1154",
+   "time": 1791475200000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.0685",
+   "time": 1791475200000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1154",
+   "time": 1791504000000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.0685",
+   "time": 1791504000000
+  },
+  {
+   "symbol": "BTCUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.1154",
+   "time": 1791532800000
+  },
+  {
+   "symbol": "ETHUSDT",
+   "incomeType": "FUNDING_FEE",
+   "income": "0.0685",
+   "time": 1791532800000
+  }
+ ]
+}

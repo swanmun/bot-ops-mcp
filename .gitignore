@@ -1,0 +1,10 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+.env.*
+bot_ops_audit.log
+private/
+bot_ops_strategy.py
