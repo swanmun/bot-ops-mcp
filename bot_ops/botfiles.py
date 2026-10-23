@@ -1,4 +1,7 @@
-"""Read the bots' own files: state_<account>.json and <account>.log. Read-only."""
+"""Read the bots' own files: state_<account>.json and <account>.log. Read-only.
+
+[한국어] 봇이 직접 쓰는 파일(state_<account>.json, <account>.log)을 읽는다. 읽기 전용이다.
+"""
 from __future__ import annotations
 
 import json
@@ -11,18 +14,25 @@ from pathlib import Path
 from . import config
 
 # Log lines written by the bot's notify(): "MM-DD HH:MM:SS <tag> <icon> <message>"
+# 봇의 notify()가 쓰는 로그 줄 형식: "MM-DD HH:MM:SS <tag> <icon> <message>"
 LINE_RE = re.compile(r"^(\d{2}-\d{2} \d{2}:\d{2}:\d{2}) (.*)$")
 WARN_ICONS = ("⚠️", "🛑")
 BAR_TIMES = "signal_bar and last_signal_check_bar are H4 bar open times in UTC"
 
 
 def num(x):
-    """Prices / risk as the bot stores them can carry float noise (75358.69090909092) — 8 significant digits."""
+    """Prices / risk as the bot stores them can carry float noise (75358.69090909092) — 8 significant digits.
+
+    [한국어] 봇이 저장한 가격·위험값에는 부동소수점 잡음(75358.69090909092)이 붙을 수 있다. 유효숫자 8자리로 줄인다.
+    """
     return float(f"{x:.8g}") if isinstance(x, float) else x
 
 
 def log_time_zone() -> str:
-    """The bots log with the server's local clock (the demo server's too)."""
+    """The bots log with the server's local clock (the demo server's too).
+
+    [한국어] 봇은 서버의 현지 시각으로 로그를 쓴다(데모 서버도 같다).
+    """
     t = datetime.now(config.DEMO_LOG_TZ) if config.DEMO else datetime.now().astimezone()
     off = t.strftime("%z")
     return f"{t.tzname()} (UTC{off[:3]}:{off[3:]})"
@@ -34,7 +44,10 @@ def read_state(account: str) -> dict:
 
 
 def describe_state(account: str) -> dict:
-    """State with the numbers a human asks about: R distance, break-even moved or not, age."""
+    """State with the numbers a human asks about: R distance, break-even moved or not, age.
+
+    [한국어] 사람이 물어볼 숫자를 붙인 상태: R 거리, 본전으로 옮겼는지, 경과 시간.
+    """
     st = read_state(account)
     now_ms = config.now_ms()
     legs_out = {}
@@ -72,20 +85,26 @@ def describe_state(account: str) -> dict:
 
 
 def tail_lines(path: Path, max_bytes: int = 2_000_000) -> list[str]:
-    """Last part of a log file (logs can grow large)."""
+    """Last part of a log file (logs can grow large).
+
+    [한국어] 로그 파일의 끝부분만 읽는다(로그는 커질 수 있다).
+    """
     if not path.exists():
         return []
     size = path.stat().st_size
     with path.open("rb") as f:
         if size > max_bytes:
             f.seek(size - max_bytes)
-            f.readline()  # drop the partial first line
+            f.readline()  # drop the partial first line / 잘린 첫 줄은 버린다
         raw = f.read()
     return raw.decode("utf-8", errors="replace").splitlines()
 
 
 def search_log(account: str, contains: str = "", symbol: str = "", only_problems: bool = False, limit: int = 40) -> dict:
-    """Newest matching lines last. Tracebacks are kept together with the line that follows them."""
+    """Newest matching lines last. Each line is matched on its own.
+
+    [한국어] 조건에 맞는 줄을 돌려준다. 가장 최근 줄이 맨 뒤에 온다. 줄마다 따로 거른다.
+    """
     lines = tail_lines(config.log_path(account))
     out = []
     for ln in lines:
@@ -105,7 +124,7 @@ def last_log_age_minutes(account: str) -> float | None:
     p = config.log_path(account)
     if not p.exists():
         return None
-    if config.DEMO:  # file times mean nothing in a fresh checkout — use the last line's own time
+    if config.DEMO:  # file times mean nothing in a fresh checkout — use the last line's own time / 막 받은 checkout에서는 파일 시각이 의미 없다 — 마지막 줄에 적힌 시각을 쓴다
         now = datetime.fromtimestamp(config.now_ms() / 1000, config.DEMO_LOG_TZ)
         stamps = [m.group(1) for m in map(LINE_RE.match, tail_lines(p)) if m]
         if not stamps:
@@ -116,7 +135,11 @@ def last_log_age_minutes(account: str) -> float | None:
 
 
 def is_running(account: str) -> bool | None:
-    """Linux: look for 'python ... <account>.py' in /proc. Elsewhere unknown (None). Demo: from demo/processes.json."""
+    """Linux: look for 'python ... <account>.py' in /proc. Elsewhere unknown (None). Demo: from demo/processes.json.
+
+    [한국어] Linux에서는 /proc에서 'python ... <account>.py'를 찾는다. 다른 OS에서는 알 수 없다(None).
+    데모는 demo/processes.json에서 읽는다.
+    """
     if config.DEMO:
         f = config.DEMO_DIR / "processes.json"
         return account in json.loads(f.read_text(encoding="utf-8")) if f.exists() else None
@@ -137,5 +160,8 @@ def is_running(account: str) -> bool | None:
 
 
 def bot_dir_label() -> str:
-    """Folder name only — never the full path (it can contain user names)."""
+    """Folder name only — never the full path (it can contain user names).
+
+    [한국어] 폴더 이름만 돌려준다. 전체 경로는 절대 내보내지 않는다(사용자 이름이 들어 있을 수 있다).
+    """
     return os.path.basename(str(config.BOT_DIR)) or "bots"

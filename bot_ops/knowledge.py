@@ -1,8 +1,12 @@
-"""Static knowledge the model can look up: error codes. (The strategy rules are in strategy.py.)"""
+"""Static knowledge the model can look up: error codes. (The strategy rules are in strategy.py.)
+
+[한국어] 모델이 찾아볼 수 있는 고정 지식: 오류 코드. (매매 규칙은 strategy.py에 있다.)
+"""
 from __future__ import annotations
 
 ERRORS = {
     # Binance USDT-M futures
+    # Binance USDT-M 선물
     "-1003": ("Too many requests (rate limit).", "The bot backs off and retries. Persistent: two bots on one IP polling too fast."),
     "-1021": ("Request timestamp outside recvWindow — the server clock drifted.",
               "Check `timedatectl` (NTP synced). The bot re-syncs its clock on this error and every hour."),
@@ -18,6 +22,7 @@ ERRORS = {
     "-2022": ("ReduceOnly order rejected.", "Close size larger than the position (position already reduced)."),
     "-4164": ("Order notional below the exchange minimum.", "Balance × risk too small for this symbol; the bot skips the entry."),
     # MetaTrader 5 trade server return codes
+    # MetaTrader 5 거래 서버 반환 코드
     "10004": ("MT5 requote.", "Price moved; the bot retries on the next check."),
     "10006": ("MT5 request rejected.", "Broker rejected the request; read the comment field."),
     "10013": ("MT5 invalid request.", "Malformed request fields (symbol, volume, type)."),

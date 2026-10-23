@@ -1,4 +1,7 @@
-"""Tools against the demo data, through a real MCP client (in-process)."""
+"""Tools against the demo data, through a real MCP client (in-process).
+
+[한국어] 데모 데이터로 도구를 시험한다. 실제 MCP 클라이언트를 같은 프로세스 안에서 띄워 호출한다.
+"""
 import asyncio
 import json
 
@@ -35,6 +38,7 @@ def test_list_bots():
     assert bots["binance_a"]["running"] is True and bots["binance_b"]["running"] is False
     assert bots["binance_a"]["virtual_orders"] == [] and bots["binance_b"]["virtual_orders"] == ["BTCUSDT", "ETHUSDT"]
     # fixed demo clock 2026-10-09 15:20 UTC: last lines 15:00:30 and 10-08 03:12:13
+    # 데모 고정 시계는 2026-10-09 15:20 UTC다. 마지막 로그 줄은 15:00:30과 10-08 03:12:13이다
     assert bots["binance_a"]["minutes_since_last_log"] == 19.5
     assert bots["binance_b"]["minutes_since_last_log"] == 2167.8
 
@@ -43,7 +47,7 @@ def test_get_state():
     out = call("get_state", account="binance_a")
     btc, eth = out["legs"]["BTCUSDT"][0], out["legs"]["ETHUSDT"][0]
     assert btc["side"] == eth["side"] == "SHORT" and btc["stop_at_or_beyond_entry"] is False
-    assert eth["age_hours"] == 30.8  # entered 10-08 08:32:41 UTC, clock 10-09 15:20
+    assert eth["age_hours"] == 30.8  # entered 10-08 08:32:41 UTC, clock 10-09 15:20 / 10-08 08:32:41 UTC에 진입, 시계는 10-09 15:20
     assert out["virtual_orders"] == {}
     b = call("get_state", account="binance_b")
     assert {s: o["side"] for s, o in b["virtual_orders"].items()} == {"BTCUSDT": "SHORT", "ETHUSDT": "SHORT"}
@@ -55,7 +59,7 @@ def test_get_state():
 def test_unknown_account_is_an_error_not_a_path(tool, bad):
     out = call(tool, account=bad)
     assert "unknown account" in out["error"]
-    assert "passwd" not in json.dumps(out).replace(bad, "")  # the error names the known accounts, nothing else
+    assert "passwd" not in json.dumps(out).replace(bad, "")  # the error names the known accounts, nothing else / 오류 메시지에는 아는 계정 이름만 나오고 다른 것은 없다
 
 
 def test_check_positions_ok_and_problems():
@@ -68,16 +72,19 @@ def test_check_positions_ok_and_problems():
     assert b["overall"] == "problem"
     assert "size mismatch" in text and "+0.01" in text
     assert "no leg owns" in text
-    for sym, bar in (("BTCUSDT", "2026-10-08 04:00"), ("ETHUSDT", "2026-10-08 08:00")):  # both after the 03:12 crash
+    for sym, bar in (("BTCUSDT", "2026-10-08 04:00"), ("ETHUSDT", "2026-10-08 08:00")):  # both after the 03:12 crash / 둘 다 03:12에 사고로 멈춘 뒤다
         missed = next(f for f in b["findings"] if f["where"] == f"{sym} SHORT virtual order")
         assert missed["level"] == "problem" and bar in missed["what"] and "not running" in missed["what"]
 
 
 def test_demo_tools_agree_with_each_other():
-    """The demo bot state must be explainable from the demo market data (one story across tools)."""
+    """The demo bot state must be explainable from the demo market data (one story across tools).
+
+    [한국어] 데모 봇 상태는 데모 시장 데이터로 설명할 수 있어야 한다. 어느 도구로 봐도 같은 이야기가 나와야 한다.
+    """
     for sym, tick in (("BTCUSDT", 0.1), ("ETHUSDT", 0.01)):
         order = call("get_state", account="binance_b")["virtual_orders"][sym]
-        bars = [r for r in exchange.client().klines_4h(sym, 1000) if r[0] <= 1791360000000]  # up to the 10-07 08:00 bar
+        bars = [r for r in exchange.client().klines_4h(sym, 1000) if r[0] <= 1791360000000]  # up to the 10-07 08:00 bar / 10-07 08:00 봉까지
         sig = demo_strategy.find_signal([float(r[2]) for r in bars], [float(r[3]) for r in bars],
                                         [float(r[4]) for r in bars], tick)
         assert sig["side"] == order["side"]
@@ -88,7 +95,7 @@ def test_search_log_problems_and_redaction():
     out = call("search_log", account="binance_a", only_problems=True)
     assert any("-2019" in ln for ln in out["lines"])
     allout = call("search_log", account="binance_a", contains="진입 (")
-    assert all("$<amount>" in ln for ln in allout["lines"])  # dollar amounts never leave the server
+    assert all("$<amount>" in ln for ln in allout["lines"])  # dollar amounts never leave the server / 달러 금액은 서버 밖으로 나가지 않는다
 
 
 def test_explain_error():
@@ -122,9 +129,9 @@ def test_search_log_limit_is_clamped():
 
 
 def test_pnl_summary_has_no_dollars():
-    out = call("pnl_summary", account="binance_a", days=7)  # fixed clock: same answer every day
-    assert out["closing_fills"] == 2 and out["realized"] == "+0.332%"  # both longs stopped at the shorts' 1R levels
-    assert out["net"] == "+0.288% of balance (+0.58 R)"  # with the % sign: a bare number was read as a fraction
+    out = call("pnl_summary", account="binance_a", days=7)  # fixed clock: same answer every day / 고정 시계라 날마다 답이 같다
+    assert out["closing_fills"] == 2 and out["realized"] == "+0.332%"  # both longs stopped at the shorts' 1R levels / 두 롱 모두 숏 신호의 1R 자리에서 손절됐다
+    assert out["net"] == "+0.288% of balance (+0.58 R)"  # with the % sign: a bare number was read as a fraction / % 기호를 붙인다. 숫자만 두었더니 비율(소수)로 읽혔다
     assert not any(k in json.dumps(out) for k in ("9200", "6.49"))
     assert call("pnl_summary", account="binance_a", days=1000)["days"] == 90
     assert call("pnl_summary", account="binance_a", days=0)["days"] == 1
@@ -152,13 +159,14 @@ def test_redaction_patterns():
 
 def test_demo_rule_signal():
     # flat closes at 100 (= the MA), bar -4 closes below it, bars -3/-2 close above it -> long signal
+    # 종가가 100(= MA)으로 평평하다. -4 봉은 그 아래에서, -3/-2 봉은 그 위에서 마감한다 -> 롱 신호
     closes, highs, lows = [100.0] * 300, [100.5] * 300, [99.5] * 300
     lows[-4], highs[-4], closes[-4] = 98.5, 100.4, 99.0
     for i in (-3, -2):
         lows[i], highs[i], closes[i] = 101.0, 102.0, 101.5
     sig = demo_strategy.find_signal(highs, lows, closes, tick=0.1)
     assert sig["side"] == "LONG" and sig["stop"] == pytest.approx(98.4) and sig["one_R_level"] == pytest.approx(102.1)
-    assert sig["entry"] == pytest.approx(98.4 + 56 * 0.1)  # 1.5 x 37 ticks, rounded to a whole tick
+    assert sig["entry"] == pytest.approx(98.4 + 56 * 0.1)  # 1.5 x 37 ticks, rounded to a whole tick / 1.5 x 37틱을 정수 틱으로 반올림했다
 
 
 def test_demo_mode_uses_demo_rules():
@@ -168,7 +176,10 @@ def test_demo_mode_uses_demo_rules():
 
 @pytest.mark.parametrize("with_file", [False, True])
 def test_live_rules_file_is_loaded_or_its_absence_is_flagged(tmp_path, with_file):
-    """Live mode reads the private rules from BOT_OPS_DIR/bot_ops_strategy.py; without it, results say so."""
+    """Live mode reads the private rules from BOT_OPS_DIR/bot_ops_strategy.py; without it, results say so.
+
+    [한국어] 실운용 모드는 비공개 규칙을 BOT_OPS_DIR/bot_ops_strategy.py에서 읽는다. 이 파일이 없으면 결과에 그 사실을 적는다.
+    """
     import os
     import subprocess
     import sys

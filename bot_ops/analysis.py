@@ -1,4 +1,7 @@
-"""Checks that combine bot files and exchange data. All read-only."""
+"""Checks that combine bot files and exchange data. All read-only.
+
+[한국어] 봇 파일과 거래소 데이터를 함께 보는 점검. 모두 읽기 전용이다.
+"""
 from __future__ import annotations
 
 from datetime import datetime, timezone
@@ -16,7 +19,10 @@ def _utc(ms: int) -> str:
 
 
 def _bar_ms(bar: str | None) -> int | None:
-    """The bot's bar key ('2026-10-09 12:00:00', UTC open time of the bar in which the order was made)."""
+    """The bot's bar key ('2026-10-09 12:00:00', UTC open time of the bar in which the order was made).
+
+    [한국어] 봇의 봉 키('2026-10-09 12:00:00'). 주문을 만든 봉의 시작 시각(UTC)이다.
+    """
     if not bar:
         return None
     return int(datetime.strptime(bar[:16], "%Y-%m-%d %H:%M").replace(tzinfo=timezone.utc).timestamp() * 1000)
@@ -25,7 +31,12 @@ def _bar_ms(bar: str | None) -> int | None:
 def _order_findings(account: str, st: dict, ex) -> list[dict]:
     """Waiting virtual orders against the H4 bars since they were made (public market data).
     The bot cancels an order once price goes past its stop, and enters once price reaches the entry — an order
-    that is still waiting after either happened means the bot missed it."""
+    that is still waiting after either happened means the bot missed it.
+
+    [한국어] 대기 중인 가상 주문을 만들어진 뒤의 H4 봉(공개 시장 데이터)과 맞대어 본다.
+    봇은 가격이 손절가를 넘어가면 주문을 취소하고, 가격이 진입가에 닿으면 진입한다. 둘 중 하나가 일어났는데
+    주문이 아직 대기 중이면 봇이 그것을 놓친 것이다.
+    """
     out = []
     running = botfiles.is_running(account)
     down = " The bot is not running, so nothing acts on this order." if running is False else ""
@@ -34,7 +45,7 @@ def _order_findings(account: str, st: dict, ex) -> list[dict]:
         try:
             k = ex.klines_4h(sym, 300)
         except ExchangeError:
-            continue  # market data unavailable — no verdict rather than a wrong one
+            continue  # market data unavailable — no verdict rather than a wrong one / 시장 데이터를 못 받음 — 틀린 판정을 내느니 판정하지 않는다
         t0 = _bar_ms(o.get("bar"))
         bars = [b for b in k if t0 is None or int(b[0]) >= t0]
         stop_at = next((b[0] for b in bars if (side > 0 and float(b[3]) <= o["sl"]) or (side < 0 and float(b[2]) >= o["sl"])), None)
@@ -64,6 +75,14 @@ def check_positions(account: str) -> dict:
       - every leg has its own stop order on the exchange with the same quantity and price
       - stop orders that no leg owns, positions the bot does not know about
       - waiting virtual orders whose entry or stop price has already been reached (missed entry / missed cancel)
+
+    [한국어] 봇의 레그를 거래소가 실제로 들고 있는 것과 비교한다.
+
+    결과 항목(각각 level ok / warn / problem):
+      - 심볼·방향별로 거래소 포지션 크기와 봇 레그 수량 합계
+      - 레그마다 수량과 가격이 같은 자기 손절 주문이 거래소에 있는지
+      - 어느 레그의 것도 아닌 손절 주문(주인 없는 손절), 봇이 모르는 포지션
+      - 진입가나 손절가에 이미 닿았는데 아직 대기 중인 가상 주문(놓친 진입 / 놓친 취소)
     """
     st = botfiles.read_state(account)
     ex = client(account)
@@ -127,7 +146,7 @@ def check_positions(account: str) -> dict:
                 if str(o.get("quantity")) not in ("", "None") and abs(float(o["quantity"]) - float(leg["qty"])) > 1e-9:
                     findings.append({"level": "warn", "where": f"{where} leg {i}",
                                      "what": f"stop quantity {o['quantity']} differs from leg quantity {leg['qty']}"})
-                if len(findings) == n_before:  # say it out loud, so "are all stops in place?" has a direct answer
+                if len(findings) == n_before:  # say it out loud, so "are all stops in place?" has a direct answer / 이상이 없어도 분명히 적는다. 그래야 "손절이 다 걸려 있나?"에 바로 답이 된다
                     findings.append({"level": "ok", "where": f"{where} leg {i}",
                                      "what": f"stop order on the exchange at {botfiles.num(trig)} for {leg['qty']} (price and quantity match the bot)"})
     for sid, o in stop_by_id.items():
@@ -142,7 +161,11 @@ def check_positions(account: str) -> dict:
 
 def pnl_summary(account: str, days: int = 7) -> dict:
     """Realized PnL, commission and funding over the last `days`, as % of the current wallet balance and in R.
-    Dollar amounts are never returned."""
+    Dollar amounts are never returned.
+
+    [한국어] 최근 `days`일 동안의 실현 손익, 수수료, 펀딩비를 현재 지갑 잔고 대비 %와 R로 낸다.
+    달러 금액은 절대 돌려주지 않는다.
+    """
     ex = client(config.check_account(account))
     end = config.now_ms()
     start = end - days * 86_400_000
@@ -166,6 +189,8 @@ def pnl_summary(account: str, days: int = 7) -> dict:
     net = sum(sums.values()) / bal * 100
     # strings with the % sign: as bare numbers (net_pct: -0.039), small models read them as fractions and
     # reported -3.9 % (eval n1/n5, 2026-10-11)
+    # % 기호를 붙인 문자열로 준다. 그냥 숫자(net_pct: -0.039)로 주면 작은 모델이 이를 비율로 읽고
+    # -3.9 %라고 보고했다(eval n1/n5, 2026-10-11)
     return {"account": account, "days": days,
             "net": f"{_pct(net)} of balance ({net / strategy.RISK_PCT:+.2f} R)",
             "realized": _pct(sums["REALIZED_PNL"] / bal * 100), "commission": _pct(sums["COMMISSION"] / bal * 100),
@@ -177,13 +202,19 @@ def pnl_summary(account: str, days: int = 7) -> dict:
 
 
 def _pct(v: float) -> str:
-    """-0.0391 -> '-0.039%' (3 decimals, trailing zeros dropped, sign always shown)."""
+    """-0.0391 -> '-0.039%' (3 decimals, trailing zeros dropped, sign always shown).
+
+    [한국어] 소수 셋째 자리까지 쓰고, 끝의 0은 지우고, 부호는 늘 붙인다.
+    """
     s = f"{round(v, 3):+.3f}".rstrip("0").rstrip(".")
     return ("+0" if s in ("+0", "-0") else s) + "%"
 
 
 def market_snapshot(symbol: str) -> dict:
-    """Where price is relative to the H4 moving average of the rules and whether the last completed bars form a signal."""
+    """Where price is relative to the H4 moving average of the rules and whether the last completed bars form a signal.
+
+    [한국어] 규칙이 쓰는 H4 이동평균에 비해 가격이 어디 있는지, 마지막 완성 봉들이 신호를 이루는지 본다.
+    """
     symbol = symbol.upper()
     ex = client()
     try:
@@ -196,10 +227,10 @@ def market_snapshot(symbol: str) -> dict:
     closes = [float(r[4]) for r in k]
     p = strategy.MA_PERIOD
 
-    def ma_at(i: int) -> float:  # MA of the p closes ending at bar -i
+    def ma_at(i: int) -> float:  # MA of the p closes ending at bar -i / 봉 -i에서 끝나는 종가 p개의 MA
         return sum(closes[len(closes) - i - p + 1:len(closes) - i + 1]) / p
 
-    ma = ma_at(2)  # of completed bars
+    ma = ma_at(2)  # of completed bars / 완성된 봉 기준
     last_close = closes[-2]
     touch_ago = next((i for i in range(2, 60) if lows[-i] <= ma_at(i) <= highs[-i]), None)
     sig = strategy.find_signal(highs, lows, closes, tick)

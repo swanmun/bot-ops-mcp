@@ -4,6 +4,11 @@
   ollama:<model>   a local model in a plain tool-calling loop against the demo server (in-process MCP client).
                    It gets the server's own instructions as the system prompt, like an MCP host would pass them.
   claude           Claude Code in headless mode (`claude -p`) with only the demo server connected.
+
+[한국어] 시험받는 어시스턴트들. 각각 질문 하나를 받아 위 모양의 dict(answer, calls, seconds, error)를 돌려준다.
+ollama:<model>은 로컬 모델이다. 데모 서버에 붙여 단순한 도구 호출 루프로 돌린다(같은 프로세스 안의 MCP 클라이언트).
+MCP 호스트가 넘기듯 서버의 instructions를 시스템 프롬프트로 받는다.
+claude는 Claude Code를 headless 모드(`claude -p`)로 돌린다. 데모 서버만 연결한다.
 """
 from __future__ import annotations
 
@@ -17,7 +22,7 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-os.environ["BOT_OPS_DEMO"] = "1"  # before bot_ops is imported
+os.environ["BOT_OPS_DEMO"] = "1"  # before bot_ops is imported / bot_ops를 import하기 전에 둔다
 sys.path.insert(0, str(ROOT))
 
 from mcp.client.client import Client  # noqa: E402
@@ -25,7 +30,7 @@ from mcp.client.client import Client  # noqa: E402
 from bot_ops.server import mcp as server  # noqa: E402
 
 OLLAMA = os.environ.get("OLLAMA_HOST", "localhost:11434")
-OLLAMA = OLLAMA if OLLAMA.startswith("http") else "http://" + OLLAMA  # the env var is often set without a scheme
+OLLAMA = OLLAMA if OLLAMA.startswith("http") else "http://" + OLLAMA  # the env var is often set without a scheme / 이 환경 변수는 scheme(http://) 없이 설정된 경우가 많다
 MAX_STEPS = 10
 
 
@@ -40,6 +45,8 @@ def _ollama_chat(model: str, messages: list, tools: list) -> dict:
             "options": {"temperature": 0, "num_ctx": 16384,
                         # no memory-mapping: otherwise the weights also sit in RAM while they are on the GPU, and
                         # models that spill out of 16 GB of VRAM ran a 32 GB machine out of memory (2026-10-10)
+                        # memory-mapping을 끈다. 켜 두면 가중치가 GPU에 있는 동안에도 RAM에 같이 남는다.
+                        # 그래서 16 GB VRAM에 다 안 들어가는 모델이 32 GB 컴퓨터의 메모리를 다 써 버렸다(2026-10-10)
                         "use_mmap": False}}
     req = urllib.request.Request(f"{OLLAMA}/api/chat", data=json.dumps(body).encode(), headers={"Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=600) as r:
@@ -47,7 +54,10 @@ def _ollama_chat(model: str, messages: list, tools: list) -> dict:
 
 
 def _ollama_loaded(model: str) -> dict:
-    """Model size and how much of it sits in GPU memory, from /api/ps (the model is still loaded after a run)."""
+    """Model size and how much of it sits in GPU memory, from /api/ps (the model is still loaded after a run).
+
+    [한국어] 모델 크기와 그중 GPU 메모리에 올라간 비율. /api/ps에서 읽는다(실행이 끝나도 모델은 아직 올라가 있다).
+    """
     try:
         with urllib.request.urlopen(f"{OLLAMA}/api/ps", timeout=10) as r:
             m = next((m for m in json.loads(r.read())["models"] if m["name"] in (model, model + ":latest")), None)
@@ -80,7 +90,7 @@ async def _run_ollama(model: str, question: str) -> dict:
                     args = json.loads(args or "{}")
                 try:
                     text = _result_text(await c.call_tool(name, args))
-                except Exception as e:  # unknown tool, bad arguments: tell the model, like a host would
+                except Exception as e:  # unknown tool, bad arguments: tell the model, like a host would / 없는 도구, 잘못된 인자: 호스트가 하듯 모델에게 알려 준다
                     text = json.dumps({"error": f"{type(e).__name__}: {e}"})
                 calls.append({"name": name, "args": args, "result": text})
                 messages.append({"role": "tool", "tool_name": name, "content": text})
@@ -90,10 +100,10 @@ async def _run_ollama(model: str, question: str) -> dict:
 
 def _run_claude(question: str, model: str | None = None) -> dict:
     env = dict(os.environ)
-    env["PATH"] = str(Path(sys.executable).parent) + os.pathsep + env["PATH"]  # demo/mcp.json runs `python`
+    env["PATH"] = str(Path(sys.executable).parent) + os.pathsep + env["PATH"]  # demo/mcp.json runs `python` / demo/mcp.json이 `python`을 실행한다
     cmd = ["claude", "-p", question, "--mcp-config", "demo/mcp.json", "--strict-mcp-config",
            "--allowedTools", "mcp__bot-ops-demo__*", "--output-format", "stream-json", "--verbose",
-           "--tools", ""]  # no built-in tools: without this it can open the demo data files directly
+           "--tools", ""]  # no built-in tools: without this it can open the demo data files directly / 내장 도구를 뺀다. 안 빼면 데모 데이터 파일을 직접 열어 볼 수 있다
     if model:
         cmd += ["--model", model]
     out = subprocess.run(cmd, cwd=ROOT, env=env, capture_output=True, text=True, encoding="utf-8", timeout=900).stdout

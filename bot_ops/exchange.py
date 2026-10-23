@@ -6,6 +6,15 @@ Safety by construction:
   - Use a separate API key created with "Enable Reading" only (and an IP restriction).
     Keys come from .env.mcp:  RO_KEY_<ACCOUNT>=...  RO_SECRET_<ACCOUNT>=...
   - Demo mode serves the same calls from demo/exchange/<account>.json and demo/market/<symbol>_4h.json.
+
+[한국어] Binance USDT-M 선물. 읽기 전용이다.
+
+구조 자체로 안전하게 만든다:
+  - HTTP GET만 쓰고, ALLOWED에 있는 엔드포인트만 부른다. 주문을 내거나 취소하거나 바꿀 수 있는
+    코드 경로는 아예 없다.
+  - "Enable Reading"만 켜서 만든 별도 API 키를 쓴다(IP 제한도 건다).
+    키는 .env.mcp의 RO_KEY_<ACCOUNT>, RO_SECRET_<ACCOUNT> 줄에서 읽는다.
+  - 데모 모드에서는 같은 호출에 demo/exchange/<account>.json과 demo/market/<symbol>_4h.json으로 답한다.
 """
 from __future__ import annotations
 
@@ -19,7 +28,7 @@ import urllib.request
 from . import config
 
 BASE = "https://fapi.binance.com"
-ALLOWED = {  # path -> needs signature
+ALLOWED = {  # path -> needs signature / 경로 -> 서명이 필요한지
     "/fapi/v1/time": False,
     "/fapi/v1/klines": False,
     "/fapi/v1/exchangeInfo": False,
@@ -64,7 +73,7 @@ class Binance:
         try:
             with urllib.request.urlopen(req, timeout=15) as r:
                 return json.loads(r.read())
-        except urllib.error.HTTPError as e:  # Binance puts {"code", "msg"} in the body
+        except urllib.error.HTTPError as e:  # Binance puts {"code", "msg"} in the body / Binance는 응답 본문에 {"code", "msg"}를 담는다
             try:
                 body = json.loads(e.read())
                 raise ExchangeError(f"Binance {body.get('code')}: {body.get('msg')}") from None
@@ -74,6 +83,7 @@ class Binance:
             raise ExchangeError(f"network error on {path}: {e.reason}") from None
 
     # --- account (signed) ---
+    # --- 계정(서명 필요) ---
     def positions(self, symbol: str | None = None) -> list[dict]:
         return self._get("/fapi/v3/positionRisk", {"symbol": symbol} if symbol else {})
 
@@ -89,7 +99,7 @@ class Binance:
 
     def income(self, start_ms: int, end_ms: int) -> list[dict]:
         out, start = [], start_ms
-        while True:  # paginate, 1000 rows per call
+        while True:  # paginate, 1000 rows per call / 페이지를 넘기며 받는다. 한 번에 1000줄
             rows = self._get("/fapi/v1/income", {"startTime": start, "endTime": end_ms, "limit": 1000})
             out += rows
             if len(rows) < 1000:
@@ -97,6 +107,7 @@ class Binance:
             start = rows[-1]["time"] + 1
 
     # --- public ---
+    # --- 공개(서명 불필요) ---
     def klines_4h(self, symbol: str, limit: int = 300) -> list[list]:
         return self._get("/fapi/v1/klines", {"symbol": symbol, "interval": "4h", "limit": limit})
 
@@ -108,7 +119,10 @@ class Binance:
 
 
 class DemoBinance:
-    """Same interface, fake data. Used by tests and the public demo."""
+    """Same interface, fake data. Used by tests and the public demo.
+
+    [한국어] 인터페이스는 같고 데이터는 가짜다. 테스트와 공개 데모에서 쓴다.
+    """
 
     def __init__(self, account: str | None = None):
         self.account = account

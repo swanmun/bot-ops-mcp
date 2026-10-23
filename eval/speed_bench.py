@@ -7,6 +7,13 @@ tokens. temperature 0, 16k context, no memory mapping, thinking off.
 
   python eval/speed_bench.py                 # all models below -> eval/speed.md, eval/speed.json
   python eval/speed_bench.py gemma4:12b      # some
+
+[한국어] 로컬 모델들의 속도를 같은 조건에서 잰다. results.md의 속도는 조건이 서로 달랐던 평가 실행에서 나온 값이다
+(다운로드를 동시에 받음, memory mapping 켬/끔, 답 길이가 다름).
+모델마다 그 모델 하나만 컴퓨터에 올린다. 먼저 모두 내리고 워밍업 호출을 한 번 한다(로드 시간을 기록한다). 그다음 같은
+약 1.5k 토큰 프롬프트로 시간을 재는 호출을 3번 한다. 출력은 정확히 256 토큰이다. 프롬프트 맨 앞에 실행 번호를 넣어
+Ollama의 프롬프트 캐시를 피한다. temperature 0, 16k context, memory mapping 끔, thinking 끔.
+인자 없이 돌리면 아래 MODELS를 모두 재서 eval/speed.md, eval/speed.json에 쓴다. 모델 이름을 주면 그 모델들만 잰다.
 """
 from __future__ import annotations
 
@@ -60,7 +67,7 @@ def call(model: str, n: int) -> dict:
             "think": False, "options": {"temperature": 0, "num_ctx": 16384, "num_predict": 256, "use_mmap": False}}
     try:
         return post("/api/chat", body)
-    except urllib.error.HTTPError:  # a model without a thinking switch
+    except urllib.error.HTTPError:  # a model without a thinking switch / thinking 스위치가 없는 모델
         body.pop("think")
         return post("/api/chat", body)
 

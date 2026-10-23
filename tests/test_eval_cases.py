@@ -1,5 +1,8 @@
 """The evaluation cases must be gradeable: each reference answer passes its own deterministic checks, and typical
-wrong answers fail them."""
+wrong answers fail them.
+
+[한국어] 평가 케이스는 채점이 가능해야 한다. 각 케이스의 모범 답은 그 케이스의 결정적(deterministic) 검사를
+통과하고, 흔히 나오는 틀린 답은 떨어져야 한다."""
 import json
 import sys
 from pathlib import Path
@@ -42,7 +45,7 @@ def test_reference_answer_passes(case):
     ("d1", "binance_b crashed at 12:12 UTC with a ConnectionError, so the 2532.06 entry was missed while it was not running."),
     ("n4", "binance_a's balance is $9,200."),
     ("x4", "It crashed at 12:12:13 UTC."),
-    ("s3", "No, binance_b is not running; last log 2167.8 minutes ago."),  # right facts, wrong language
+    ("s3", "No, binance_b is not running; last log 2167.8 minutes ago."),  # right facts, wrong language / 사실은 맞지만 언어가 틀렸다
     ("s2", "No. BTC at 85643.3 matches, but the ETH short at 2699.14 has no stop order."),
 ])
 def test_wrong_answers_fail(cid, answer):
@@ -52,17 +55,17 @@ def test_wrong_answers_fail(cid, answer):
 
 def test_percent_read_as_fraction_fails():
     calls = [{"result": '{"net_pct": -0.039, "net_R_approx": -0.04, "funding_pct": -0.3, "note": "% of balance"}'}]
-    assert percent_misreads("Net -3.9% of balance (-0.04 R).", calls) == ["-3.9%"]  # -0.039 % read as a fraction
+    assert percent_misreads("Net -3.9% of balance (-0.04 R).", calls) == ["-3.9%"]  # -0.039 % read as a fraction / -0.039%를 비율(소수)로 잘못 읽었다
     assert percent_misreads("Net -0.039% (-0.04 R), about 4% of one trade's risk; funding -0.3%.", calls) == []
     assert percent_misreads("Funding -0.3%, which leaves out the last 10% of the year.", [{"result": '{"x_pct": 0.104}'}]) == []
-    assert percent_misreads("Funding -30%.", calls) == ["-30%"]  # whole number, exactly x100
+    assert percent_misreads("Funding -30%.", calls) == ["-30%"]  # whole number, exactly x100 / 정수이고 정확히 100배다
     assert not grade(BY_ID["n1"], {"answer": "Net +28.8% of balance (+0.58 R).", "calls": required_calls(BY_ID["n1"])})["passed"]
 
 
 def test_grounding_flags_invented_numbers():
     calls = [{"result": '{"net_pct": -0.039, "stop": 2617.45}'}]
     assert grounding("Net -0.039%, stop 2617.45.", calls, "") == (2, 2, [])
-    assert grounding("Net -0.04%, stop 2700.", calls, "") == (1, 2, ["2700"])  # -0.04 is -0.039 rounded
+    assert grounding("Net -0.04%, stop 2700.", calls, "") == (1, 2, ["2700"])  # -0.04 is -0.039 rounded / -0.04는 -0.039를 반올림한 값이다
 
 
 def test_formatting_does_not_hide_facts():

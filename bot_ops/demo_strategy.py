@@ -5,13 +5,21 @@ They are NOT the live bots' rules. Those are private and stay on the server (see
   RISK_PCT       risk per trade in % of balance (turns % of balance into R)
   RULES          the rules as text, for the strategy_rules tool
   find_signal()  the signal on the last completed bars, or None
+
+[한국어] 데모 매매 규칙. 같이 들어 있는 데모 데이터(demo/)를 만들 때 쓴 규칙이다.
+
+실제 운영 봇의 규칙이 아니다. 그 규칙은 비공개라 서버에만 있다(strategy.py 참고). 규칙 모듈에는 다음이 있다:
+  MA_PERIOD      규칙이 쓰는 이동평균(H4 종가 기준)
+  RISK_PCT       거래당 위험(잔고 대비 %). 잔고 대비 %를 R로 바꾼다
+  RULES          규칙을 글로 적은 것. strategy_rules 도구가 쓴다
+  find_signal()  마지막 완성 봉들의 신호. 없으면 None
 """
 from __future__ import annotations
 
 MA_PERIOD = 100
 RISK_PCT = 0.5
-ENTRY_R = 1.5  # entry, in signal units (stop 0, 1R level 1)
-BREAK_EVEN_R = 1.0  # break-even trigger, in initial risk beyond the entry
+ENTRY_R = 1.5  # entry, in signal units (stop 0, 1R level 1) / 진입가, 신호 단위(손절 0, 1R 레벨 1)
+BREAK_EVEN_R = 1.0  # break-even trigger, in initial risk beyond the entry / 본전 이동 조건. 진입가에서 초기 위험의 몇 배를 더 가야 하는지
 
 RULES = f"""\
 Strategy rules used by the demo bots (demo data only; the live bots' rules are private)
@@ -36,13 +44,19 @@ Binance specifics: hedge mode; same-side entries merge into one exchange positio
 
 
 def _ma(closes: list[float], end: int) -> float:
-    """MA of the MA_PERIOD closes ending at index `end` (negative)."""
+    """MA of the MA_PERIOD closes ending at index `end` (negative).
+
+    [한국어] 인덱스 `end`(음수)에서 끝나는 종가 MA_PERIOD개의 MA.
+    """
     n = len(closes)
     return sum(closes[n + end - MA_PERIOD + 1:n + end + 1]) / MA_PERIOD
 
 
 def find_signal(highs, lows, closes, tick) -> dict | None:
-    """Signal at the start of the current bar (the last list item is the bar in progress; -4..-2 are completed)."""
+    """Signal at the start of the current bar (the last list item is the bar in progress; -4..-2 are completed).
+
+    [한국어] 현재 봉이 시작될 때의 신호. 리스트의 마지막 항목은 진행 중인 봉이고, -4..-2가 완성된 봉이다.
+    """
     if len(closes) < MA_PERIOD + 6:
         return None
     c = closes

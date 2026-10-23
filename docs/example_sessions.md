@@ -1,5 +1,7 @@
 # Example sessions (demo data)
 
+[한국어](example_sessions.ko.md)
+
 Unedited answers from Claude Code (`claude -p`, 2026-10-12) connected only to the demo server, with its built-in
 tools switched off so it can use nothing but the MCP tools (this is `eval/agent.py`'s `claude` agent):
 
