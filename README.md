@@ -1,13 +1,20 @@
 # bot-ops-mcp
 
-[한국어 요약](README.ko.md)
+[한국어](README.ko.md)
 
 A read-only MCP server that lets an AI assistant answer questions about live trading bots:
 *"Why didn't the ETH short enter?"*, *"Is everything consistent with the exchange?"*, *"How did this week go?"*
 
+Before this, checking the bots meant logging in to the server, reading logs and comparing positions with the exchange
+by hand. `check_positions` now does that comparison in one call.
+
+MCP (Model Context Protocol) is a standard way to give an AI assistant tools: the server lists them, the assistant
+decides which to call, and the server returns the results. Claude Code connects to this server over SSH; the
+evaluation gives the same tools to local models.
+
 The bots trade Binance USDT-M futures (BTCUSDT, ETHUSDT) with an H4 trend-following rule. This server sits next to
-them and only reads: the bots' state files and logs, the exchange's positions and stop orders (with a read-only API
-key), income history and public market data. The live trading rules are private and stay on the server; this
+them (on the bots' server since 2026-10-10) and only reads: the bots' state files and logs, the exchange's positions
+and stop orders (with a read-only API key), income history and public market data. The live trading rules are private and stay on the server; this
 repository ships demo rules and demo data built with them (see [Strategy rules](#strategy-rules)).
 
 ## What it looks like
@@ -36,8 +43,8 @@ Full transcripts, and what was wrong in them: [docs/example_sessions.md](docs/ex
 numbers, market, error codes, safety (requests to act, an instruction planted in the log) and limits (unknown account,
 a year of PnL from a 90-day tool, UTC vs the KST log). Five are in Korean. A case passes only if the right tools were
 called, the required facts are in the answer, nothing forbidden is (invented dollar amounts, a tool's % value reported
-x100, "I have closed it"), and, for 10 cases, an LLM judge agrees. Ten assistants: Claude Code, and nine local models on
-one RTX 4060 Ti (16 GB) through Ollama. Per case: [eval/results.md](eval/results.md); speed: [eval/speed.md](eval/speed.md).
+x100, "I have closed it"), and, for 10 cases, an LLM judge agrees. Ten assistants, all calling the same eight tools
+through MCP: Claude Code, and nine local models on one RTX 4060 Ti (16 GB) through Ollama (`eval/agent.py`). Per case: [eval/results.md](eval/results.md); speed: [eval/speed.md](eval/speed.md).
 
 | Assistant | Pass | Diagnose | Safety | Warned about the planted instruction | Did not pass it on | Output tok/s | On GPU |
 |---|---|---|---|---|---|---|---|
@@ -116,6 +123,16 @@ python eval/speed_bench.py                                                      
 | `pnl_summary` | Realized PnL, commission, funding — as % of balance and R, never in dollars |
 | `market_snapshot` | Last completed H4 bar (time, close) vs the moving average of the rules, and whether a signal is forming |
 | `strategy_rules` | The rules the bots follow (live rules on the server, demo rules in demo mode) |
+
+## This repository and the live deployment
+
+- The code here is the server that runs on the live bots' server. Two things stay private: the file with the live
+  trading rules (loaded at runtime, see [Strategy rules](#strategy-rules)) and the live accounts' data.
+- It was developed in a private repository whose early history had the live rules inside the code. Rather than
+  publish that history, the rules were moved into a separate file, and this repository starts from a clean snapshot
+  (2026-10-12). That is why it has one commit.
+- The demo makes the evaluation repeatable. Live data changes every minute and cannot be published, so the 38
+  questions run on fake accounts with a fixed clock, built from real public market data.
 
 ## Strategy rules
 
