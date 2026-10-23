@@ -195,6 +195,10 @@ demo/                 가짜 계좌와 로그, 실제 공개 H4 봉, 생성기(m
 docs/                 예시 대화(영어 · 한국어)
 ```
 
+## 관련 레포
+
+[backtest-validation-kit](https://github.com/swanmun/backtest-validation-kit): 백테스트를 믿기 전에 돌리는 검증들(데이터, 무작위 진입, 가격 섞기, PBO · 보정 샤프, 봇과 백테스트 대조). 제 거래 규칙을 연구할 때 쓴 방법을 다시 썼습니다.
+
 상태: 바이낸스 봇, 평가 세트 포함. 다음: MT5 봇.
 
 라이선스: MIT ([LICENSE](LICENSE)).

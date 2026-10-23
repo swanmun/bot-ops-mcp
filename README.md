@@ -270,6 +270,10 @@ demo/                 fake accounts and logs, real public H4 bars, the generator
 docs/                 example sessions (English and Korean)
 ```
 
+## Related
+
+[backtest-validation-kit](https://github.com/swanmun/backtest-validation-kit): the checks I run before trusting a backtest (data, random entries, shuffled prices, PBO and deflated Sharpe, bot vs backtest), rewritten from the research behind my trading rules.
+
 Status: Binance bots, with an evaluation set. Next: the MT5 bots.
 
 License: MIT ([LICENSE](LICENSE)).
