@@ -212,6 +212,25 @@ rules: every signal, entry, cancel, break-even move and stop fill happens where 
 refuses to write the demo if they disagree. The demo has a fixed clock
 (`demo/clock.json`, 2026-10-09 15:20 UTC), so answers do not drift with the calendar and can serve as test fixtures.
 
+## Using it with your own bots
+
+This server is built around my bots' formats, so it will not read yours as is. What works for anyone without
+changes: the demo, the tests, and the evaluation with your own local model (`--agent ollama:<model>`).
+
+To connect your own bots, replace five things:
+
+| What | Here | Files |
+|---|---|---|
+| Exchange | Binance USDT-M futures only (hedge-mode positions, a fixed list of GET endpoints) | `bot_ops/exchange.py` |
+| Bot state | `state_<account>.json` with virtual orders, legs and signal bars, my bots' own format | `bot_ops/botfiles.py`, `bot_ops/analysis.py` |
+| Log format | `MM-DD HH:MM:SS` times, icons such as ⚠️ 🛑 ✅ 📌, a few Korean words | `bot_ops/botfiles.py` |
+| Rules | a rules file with `MA_PERIOD`, `RISK_PCT`, `RULES`, `find_signal()` (template: `bot_ops/demo_strategy.py`) | `bot_ops/strategy.py` |
+| Paths, keys, symbols | `BOT_OPS_DIR`, key names in `.env.mcp`, BTCUSDT and ETHUSDT | `bot_ops/config.py`, `bot_ops/server.py` |
+
+The parts meant to carry over are the patterns: a GET-only client with an endpoint allowlist, scrubbing before the
+model sees a result, the audit log, log text marked as data, a warning when demo rules stand in for live ones, and the
+evaluation harness (pass conditions, judge, regrading saved answers).
+
 ## Run against the real bots (Ubuntu server)
 
 ```bash
