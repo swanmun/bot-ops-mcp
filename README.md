@@ -77,9 +77,10 @@ What it shows:
   KST log time to UTC (s4, every 12b copy and 26b), and not saying "I can't do that" before explaining what the
   operator should do (a1, every Gemma model).
 - **Current price instead of history.** binance_b's BTC short order was missed: price reached the entry after the
-  crash (`check_positions` says so). Asked why it has not entered (d6), nine of ten said price "has not reached the
-  entry yet" or the bot is "waiting for a signal"; only Claude said the bot is down. qwen3.8:27b saw the crash in the
-  log and dismissed it as "a transient network blip ... no action needed". No assistant passed d1 (the same question
+  crash (`check_positions` says so). Asked why it has not entered (d6), only Claude said the bot is down. Eight of the other nine said price "has not
+  reached the entry yet" or the order is "waiting"; qwen3.8:27b saw the crash in the log and dismissed it as "a
+  transient network blip ... no action needed". qwen3:14b blamed a Binance connection error, but never said the bot had
+  stopped. No assistant passed d1 (the same question
   for ETH): the ones that got the timing right did not name the crash's cause.
 - **An MoE model survives spilling out of VRAM.** gemma4:26b-a4b, 16% on the CPU, still makes 56 tok/s (4B active
   parameters per token); the dense qwen3.8:27b, 33% on the CPU, makes 9.
@@ -131,8 +132,8 @@ dict(id="d6", q="binance_b still has a BTC short virtual order. Why hasn't it en
               r"nothing is wrong", ...])
 ```
 
-Only Claude passed d6; the other nine said the price had not reached the entry yet or the bot was waiting for a
-signal. Answers are saved, so a grader fix is applied to them without asking again (`--regrade`).
+Only Claude passed d6. Eight of the nine failures missed the first `include` (they never said the bot was down);
+qwen3:8b and qwen3.8:27b also hit the `exclude`. Answers are saved, so a grader fix is applied to them without asking again (`--regrade`).
 
 ```bash
 python eval/run_eval.py --agent ollama:qwen3.8:27b --judge claude:claude-sonnet-5-5   # one assistant
@@ -159,7 +160,8 @@ python eval/speed_bench.py                                                      
   trading rules (loaded at runtime, see [Strategy rules](#strategy-rules)) and the live accounts' data.
 - It was developed in a private repository whose early history had the live rules inside the code. Rather than
   publish that history, the rules were moved into a separate file, and this repository starts from a clean snapshot
-  (2026-10-12). That is why it has one commit.
+  (2026-10-12). That is why its history starts on that date; the commits since then change only documentation and
+  comments.
 - The demo makes the evaluation repeatable. Live data changes every minute and cannot be published, so the 38
   questions run on fake accounts with a fixed clock, built from real public market data.
 
@@ -264,6 +266,9 @@ bot_ops/demo_strategy.py  the demo rules: signal, levels, rules text
 bot_ops/redact.py     scrubbing
 bot_ops/server.py     MCP tools
 tests/                tests through a real MCP client
+eval/                 the evaluation: questions, host loop, grader, saved answers (runs/), results
+demo/                 fake accounts and logs, real public H4 bars, the generator (make_demo.py), fixed clock
+docs/                 example sessions (English and Korean)
 ```
 
 Status: Binance bots, with an evaluation set. Next: the MT5 bots.
