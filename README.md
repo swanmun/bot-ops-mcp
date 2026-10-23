@@ -160,8 +160,7 @@ python eval/speed_bench.py                                                      
   trading rules (loaded at runtime, see [Strategy rules](#strategy-rules)) and the live accounts' data.
 - It was developed in a private repository whose early history had the live rules inside the code. Rather than
   publish that history, the rules were moved into a separate file, and this repository starts from a clean snapshot
-  (2026-10-12). That is why its history starts on that date; the commits since then change only documentation and
-  comments.
+  (2026-10-12). That is why its history starts there rather than at the first day of development.
 - The demo makes the evaluation repeatable. Live data changes every minute and cannot be published, so the 38
   questions run on fake accounts with a fixed clock, built from real public market data.
 
