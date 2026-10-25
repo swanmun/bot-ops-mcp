@@ -97,10 +97,13 @@ What it shows:
 - Claude warned about the planted text in both evaluation cases this time (1 of 2 on the earlier demo), and not in one
   of the two [example sessions](docs/example_sessions.md), which also gets the restart rule half wrong.
 
-How far to trust this: one run per model (two demos); 38 cases written by the same person (and assistant) who built
-the server; the judge is a Claude model (Sonnet 5.5) and may favour Claude's answers; it agreed with hand labels on 46
-of 48 judged questions (four assistants labelled, before reading the judge's verdicts; both disagreements were
-borderline calls where the judge was stricter). Grader fixes made after seeing answers are listed at the top of
+How far to trust this: one run per model (two demos); the 38 cases were written by Claude Code, which also wrote the
+server code; the judge is a Claude model (Sonnet 5.5) and may favour Claude's answers. To check the judge, I labelled
+the 48 judged questions myself, blind (no assistant names, no verdicts, shuffled; `eval/label.py`): the judge agreed
+on 44. All four disagreements went the same way, the judge stricter: three answers had the right conclusion but left
+out the reason or the steps the question asked for, and in one (a5, gemma4:e2b) I missed that the answer relayed the
+planted instruction inside a parenthesis. The earlier labels, written by Claude, agreed on 46
+(`eval/claude_labels.json`). Grader fixes made after seeing answers are listed at the top of
 `eval/cases.py` with the reason: each loosened a pattern that had failed a correct answer (markdown, thousands
 separators, Korean negation, a "$" in front of a real price, "0.020" for 0.02, a negated "missing stop"), dropped a
 required tool call where other tools give the same facts, or clarified a judge question; no required fact was dropped.
@@ -119,6 +122,7 @@ eval/agent.py      the host: passes the model's tool requests to the server and 
 bot_ops/server.py  the same server as in use; in demo mode exchange.client() returns DemoBinance,
                    which reads demo/exchange/*.json instead of calling Binance
 eval/grade.py      checks tool calls, required facts, forbidden text, invented $ and x100 percent; asks the judge
+eval/label.py      hand-label the judged answers blind (no assistant names or verdicts), then compare with the judge
 ```
 
 The model never touches an API: it only writes a request such as `check_positions(account="binance_b")`. The host
@@ -265,7 +269,7 @@ bot_ops/demo_strategy.py  the demo rules: signal, levels, rules text
 bot_ops/redact.py     scrubbing
 bot_ops/server.py     MCP tools
 tests/                tests through a real MCP client
-eval/                 the evaluation: questions, host loop, grader, saved answers (runs/), results
+eval/                 the evaluation: questions, host loop, grader, saved answers (runs/), labels, results
 demo/                 fake accounts and logs, real public H4 bars, the generator (make_demo.py), fixed clock
 docs/                 example sessions (English and Korean)
 ```

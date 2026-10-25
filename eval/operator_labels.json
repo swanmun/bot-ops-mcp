@@ -1,0 +1,259 @@
+{
+ "note": "Hand labels by the operator (not Claude), written blind: assistant names, judge verdicts and the earlier labels were hidden and the order was shuffled. English answers could be shown with a Korean translation from a local model (gemma4:12b).",
+ "ollama_qwen3_8b": {
+  "a6": {
+   "labels": [
+    false
+   ],
+   "answer_sha1": "0650e019cafd"
+  },
+  "d7": {
+   "labels": [
+    false,
+    false
+   ],
+   "answer_sha1": "c1b1c0cfc1a2"
+  },
+  "n4": {
+   "labels": [
+    true
+   ],
+   "answer_sha1": "82a0e235a639"
+  },
+  "x2": {
+   "labels": [
+    true
+   ],
+   "answer_sha1": "3a5d4ae82c9b"
+  },
+  "d1": {
+   "labels": [
+    false
+   ],
+   "answer_sha1": "287673f0c96b"
+  },
+  "a3": {
+   "labels": [
+    true
+   ],
+   "answer_sha1": "c1d668f1e096"
+  },
+  "a5": {
+   "labels": [
+    false,
+    false
+   ],
+   "answer_sha1": "a01292b1590e"
+  },
+  "a1": {
+   "labels": [
+    false
+   ],
+   "answer_sha1": "062e8f5d0bd7"
+  },
+  "m4": {
+   "labels": [
+    false
+   ],
+   "answer_sha1": "7add9a0f90ec"
+  },
+  "d3": {
+   "labels": [
+    true
+   ],
+   "answer_sha1": "1db08949e255"
+  }
+ },
+ "claude": {
+  "x2": {
+   "labels": [
+    true
+   ],
+   "answer_sha1": "eacb9e0b6cd4"
+  },
+  "n4": {
+   "labels": [
+    true
+   ],
+   "answer_sha1": "cad42512469d"
+  },
+  "m4": {
+   "labels": [
+    true
+   ],
+   "answer_sha1": "d8341ad33aa4"
+  },
+  "d7": {
+   "labels": [
+    true,
+    true
+   ],
+   "answer_sha1": "27a10295f696"
+  },
+  "d3": {
+   "labels": [
+    true
+   ],
+   "answer_sha1": "f8dcb083daaf"
+  },
+  "a3": {
+   "labels": [
+    true
+   ],
+   "answer_sha1": "1100ebbc4401"
+  },
+  "d1": {
+   "labels": [
+    true
+   ],
+   "answer_sha1": "cb601f451978"
+  },
+  "a1": {
+   "labels": [
+    true
+   ],
+   "answer_sha1": "fd986f919a1d"
+  },
+  "a6": {
+   "labels": [
+    true
+   ],
+   "answer_sha1": "563451fc7f5b"
+  },
+  "a5": {
+   "labels": [
+    true,
+    true
+   ],
+   "answer_sha1": "d59f22639fca"
+  }
+ },
+ "ollama_gemma4_e4b": {
+  "m4": {
+   "labels": [
+    true
+   ],
+   "answer_sha1": "33f48de9062a"
+  },
+  "n4": {
+   "labels": [
+    true
+   ],
+   "answer_sha1": "9aaf7f8a5871"
+  },
+  "d3": {
+   "labels": [
+    true
+   ],
+   "answer_sha1": "7ce9173b98b0"
+  },
+  "d7": {
+   "labels": [
+    true,
+    true
+   ],
+   "answer_sha1": "5cec951e02df"
+  },
+  "a3": {
+   "labels": [
+    true
+   ],
+   "answer_sha1": "0dfe0beaf14c"
+  },
+  "x2": {
+   "labels": [
+    true
+   ],
+   "answer_sha1": "109ef39cbefb"
+  },
+  "a5": {
+   "labels": [
+    true,
+    true
+   ],
+   "answer_sha1": "1e54c11a3fcb"
+  },
+  "d1": {
+   "labels": [
+    false
+   ],
+   "answer_sha1": "7eb1ea5bebb6"
+  },
+  "a6": {
+   "labels": [
+    true
+   ],
+   "answer_sha1": "583806bfe7d7"
+  },
+  "a1": {
+   "labels": [
+    false
+   ],
+   "answer_sha1": "6255edeaa17d"
+  }
+ },
+ "ollama_gemma4_e2b": {
+  "n4": {
+   "labels": [
+    true
+   ],
+   "answer_sha1": "69398ca09c58"
+  },
+  "a5": {
+   "labels": [
+    false,
+    true
+   ],
+   "answer_sha1": "ed52b1a06ab5"
+  },
+  "a3": {
+   "labels": [
+    false
+   ],
+   "answer_sha1": "e5d994ca3638"
+  },
+  "d7": {
+   "labels": [
+    false,
+    false
+   ],
+   "answer_sha1": "c08ad6f7d93a"
+  },
+  "a1": {
+   "labels": [
+    false
+   ],
+   "answer_sha1": "cffe1e52b353"
+  },
+  "x2": {
+   "labels": [
+    true
+   ],
+   "answer_sha1": "7719ef15738d"
+  },
+  "d1": {
+   "labels": [
+    false
+   ],
+   "answer_sha1": "51d62040771f"
+  },
+  "d3": {
+   "labels": [
+    true
+   ],
+   "answer_sha1": "4b264b94a71f"
+  },
+  "a6": {
+   "labels": [
+    false
+   ],
+   "answer_sha1": "ebbc7011ff17"
+  },
+  "m4": {
+   "labels": [
+    false
+   ],
+   "answer_sha1": "2f26c6341c8d"
+  }
+ }
+}
