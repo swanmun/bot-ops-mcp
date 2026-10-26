@@ -98,7 +98,8 @@ What it shows:
   of the two [example sessions](docs/example_sessions.md), which also gets the restart rule half wrong.
 
 How far to trust this: one run per model (two demos); the 38 cases were written by Claude Code, which also wrote the
-server code; the judge is a Claude model (Sonnet 5.5) and may favour Claude's answers. To check the judge, I labelled
+server code; I later went through each question and its expected answer, with nothing to change; the judge is a
+Claude model (Sonnet 5.5) and may favour Claude's answers. To check the judge, I labelled
 the 48 judged questions myself, blind (no assistant names, no verdicts, shuffled; `eval/label.py`): the judge agreed
 on 44. All four disagreements went the same way, the judge stricter: three answers had the right conclusion but left
 out the reason or the steps the question asked for, and in one (a5, gemma4:e2b) I missed that the answer relayed the
