@@ -132,12 +132,12 @@ a 13 GB model on the GPU also held 11 GB of RAM and the machine ran short.
 
 ```mermaid
 flowchart TD
-    C["38 questions<br/>fixed-clock demo<br/>one answer each"] --> H["host loop<br/>up to 10 rounds<br/>request → server → result"]
+    C["38 questions<br/>fixed-clock demo<br/>one answer each"] --> H["host loop<br/>up to 10 rounds<br/>request → server<br/>→ result"]
     H --> ANS["answers and<br/>tool calls saved"]
     ANS --> RG["rule checks<br/>right tools<br/>required facts<br/>forbidden text<br/>invented $ · x100 %"]
     RG --> J["LLM judge<br/>10 questions"]
     J --> RES["pass / fail<br/>per question"]
-    J --> HL["operator labels blind<br/>agrees with the<br/>judge on 44 of 48"]
+    J --> HL["operator labels<br/>blind, agrees<br/>with the judge<br/>on 44 of 48"]
     ANS -.->|"--regrade"| RG
 ```
 
