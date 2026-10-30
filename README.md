@@ -19,16 +19,16 @@ repository ships demo rules and demo data built with them (see [Strategy rules](
 
 ```mermaid
 flowchart LR
-    A["AI assistant<br/>Claude Code over SSH,<br/>or a local model in the evaluation"]
+    A["AI assistant<br/>Claude Code or<br/>a local model"]
     S["bot-ops-mcp<br/>8 read-only tools"]
-    G["Before a result reaches the model:<br/>keys, tokens, IPs and $ amounts removed<br/>(money only as % of balance and R) ·<br/>log text marked as data, not instructions ·<br/>every call written to an audit log"]
-    B["Bots' state files and logs"]
-    X["Binance, read-only IP-restricted key<br/>HTTP GET to a fixed list of URLs only<br/>positions · stop orders · income · prices<br/>no order, cancel or modify function exists"]
+    B["bots' state files<br/>and logs"]
+    X["Binance<br/>read-only key<br/>HTTP GET only<br/>no order functions"]
+    F["cleaned on return<br/>no keys, IPs or $<br/>log text as data<br/>audit log"]
     A -->|"tool request"| S
-    S -->|"cleaned result"| A
-    S -.- G
     S -->|"read"| B
     S -->|"GET"| X
+    S --> F
+    F -->|"result"| A
 ```
 
 ## What it looks like
@@ -132,13 +132,13 @@ a 13 GB model on the GPU also held 11 GB of RAM and the machine ran short.
 
 ```mermaid
 flowchart TD
-    C["38 questions on demo data<br/>clock fixed, one right answer each<br/>eval/cases.py"] --> H
-    H["Host loop, up to 10 rounds · eval/agent.py<br/>the model writes a tool request, the server runs it,<br/>the result goes back into the conversation"] --> ANS
-    ANS["Answer and tool calls saved<br/>eval/runs/"] --> RG
-    RG["Rule checks · eval/grade.py<br/>right tools called · required facts present ·<br/>no forbidden text · no invented $ · no x100 percent"] --> J
-    J["LLM judge on 10 of the questions"] --> RES["Pass or fail per question<br/>eval/results.md"]
-    J --> HL["Operator labels the judged answers blind<br/>eval/label.py: agrees with the judge on 44 of 48"]
-    ANS -.->|"grader fixed: --regrade<br/>re-scores saved answers, nothing re-asked"| RG
+    C["38 questions<br/>fixed-clock demo<br/>one answer each"] --> H["host loop<br/>up to 10 rounds<br/>request → server → result"]
+    H --> ANS["answers and<br/>tool calls saved"]
+    ANS --> RG["rule checks<br/>right tools<br/>required facts<br/>forbidden text<br/>invented $ · x100 %"]
+    RG --> J["LLM judge<br/>10 questions"]
+    J --> RES["pass / fail<br/>per question"]
+    J --> HL["operator labels blind<br/>agrees with the<br/>judge on 44 of 48"]
+    ANS -.->|"--regrade"| RG
 ```
 
 ```
