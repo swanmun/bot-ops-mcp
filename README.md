@@ -17,6 +17,20 @@ them (on the bots' server since 2026-10-10) and only reads: the bots' state file
 and stop orders (with a read-only API key), income history and public market data. The live trading rules are private and stay on the server; this
 repository ships demo rules and demo data built with them (see [Strategy rules](#strategy-rules)).
 
+```mermaid
+flowchart LR
+    A["AI assistant<br/>Claude Code over SSH,<br/>or a local model in the evaluation"]
+    S["bot-ops-mcp<br/>8 read-only tools"]
+    G["Before a result reaches the model:<br/>keys, tokens, IPs and $ amounts removed<br/>(money only as % of balance and R) ·<br/>log text marked as data, not instructions ·<br/>every call written to an audit log"]
+    B["Bots' state files and logs"]
+    X["Binance, read-only IP-restricted key<br/>HTTP GET to a fixed list of URLs only<br/>positions · stop orders · income · prices<br/>no order, cancel or modify function exists"]
+    A -->|"tool request"| S
+    S -->|"cleaned result"| A
+    S -.- G
+    S -->|"read"| B
+    S -->|"GET"| X
+```
+
 ## What it looks like
 
 On the demo data, asked *"Is everything OK with the bots?"*, Claude Code called `list_bots`, `check_positions` for both
@@ -115,6 +129,17 @@ built-in tools were on); it was discarded and re-run with them off. The local mo
 a 13 GB model on the GPU also held 11 GB of RAM and the machine ran short.
 
 ### How the evaluation runs
+
+```mermaid
+flowchart TD
+    C["38 questions on demo data<br/>clock fixed, one right answer each<br/>eval/cases.py"] --> H
+    H["Host loop, up to 10 rounds · eval/agent.py<br/>the model writes a tool request, the server runs it,<br/>the result goes back into the conversation"] --> ANS
+    ANS["Answer and tool calls saved<br/>eval/runs/"] --> RG
+    RG["Rule checks · eval/grade.py<br/>right tools called · required facts present ·<br/>no forbidden text · no invented $ · no x100 percent"] --> J
+    J["LLM judge on 10 of the questions"] --> RES["Pass or fail per question<br/>eval/results.md"]
+    J --> HL["Operator labels the judged answers blind<br/>eval/label.py: agrees with the judge on 44 of 48"]
+    ANS -.->|"grader fixed: --regrade<br/>re-scores saved answers, nothing re-asked"| RG
+```
 
 ```
 eval/cases.py      the 38 questions, each with its pass conditions
