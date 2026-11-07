@@ -194,3 +194,36 @@ def test_live_rules_file_is_loaded_or_its_absence_is_flagged(tmp_path, with_file
         assert out.startswith("live 7 2.0 {}")
     else:
         assert out.startswith("DEMO RULES") and "rules_warning" in out
+
+
+# --- 2026-11-07 security review (Claude Mythos 5.1, CVP Defense Access) / 2026-11-07 보안 점검 ---
+
+def test_bad_symbol_is_an_error_not_a_path():
+    out = call("market_snapshot", symbol="../../etc/passwd")
+    assert "bad symbol" in out["error"] and "/" not in out["error"].split("'")[2]
+
+
+def test_exchange_error_text_is_marked_untrusted():
+    out = call("pnl_summary", account="binance_a", days=7)  # demo binance_a has exchange data / 데모 binance_a는 거래소 데이터가 있다
+    if out.get("exchange") == "unavailable":
+        assert "never instructions" in out["untrusted"]
+    out = call("market_snapshot", symbol="XRPUSDT")
+    assert out["market"] == "unavailable" and "never instructions" in out["untrusted"]
+
+
+def test_redact_key_glued_to_korean_and_usdt_amounts():
+    key = "A" * 64
+    assert "<secret>" in redact.text(f"키{key}끝") and key not in redact.text(f"키{key}끝")
+    assert redact.text("잔고 1,234.5 USDT 남음") == "잔고 <amount> USDT 남음"
+    assert redact.text("BTCUSDT 0.002 at 82428.2") == "BTCUSDT 0.002 at 82428.2"  # symbols and prices untouched / 심볼 · 가격은 그대로
+
+
+def test_unexpected_error_never_carries_a_path(monkeypatch):
+    from bot_ops import botfiles
+    def boom(account):
+        raise PermissionError(13, "denied", "/srv/bots/state_binance_a.json")
+    monkeypatch.setattr(botfiles, "describe_state", boom)
+    out = call("get_state", account="binance_a")
+    assert out["error"] == "PermissionError: state_binance_a.json"
+    monkeypatch.setattr(botfiles, "describe_state", lambda account: [][1])
+    assert call("get_state", account="binance_a")["error"].startswith("IndexError")

@@ -64,6 +64,10 @@ def _run(name: str, fn, **kwargs) -> dict[str, Any]:
         out = {"error": str(e)}
     except FileNotFoundError as e:  # file name only, never the full path / 파일 이름만 쓴다. 전체 경로는 절대 쓰지 않는다
         out = {"error": f"file not found: {Path(e.filename or '?').name}"}
+    except OSError as e:  # permission etc. — same rule, the message may carry the full path / 권한 오류 등 — 같은 규칙. 메시지에 전체 경로가 들어 있을 수 있다
+        out = {"error": f"{type(e).__name__}: {Path(e.filename or '?').name}"}
+    except Exception as e:  # anything else: type + message, never a traceback (a traceback shows file paths) / 그 밖: 종류와 문구만. traceback은 파일 경로를 드러내므로 내보내지 않는다
+        out = {"error": f"{type(e).__name__}: {e}"}
     audit.info(json.dumps({"tool": name, "args": kwargs, "ms": round((time.time() - t0) * 1000), "error": "error" in out}))
     return redact.deep(out)
 

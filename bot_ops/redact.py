@@ -16,9 +16,12 @@ import re
 
 _PATTERNS = [
     (re.compile(r"\b\d{6,12}:[A-Za-z0-9_-]{30,}\b"), "<telegram-token>"),   # Telegram bot token / Telegram 봇 토큰
-    (re.compile(r"\b[A-Za-z0-9]{48,}\b"), "<secret>"),                       # exchange API key / secret, signatures / 거래소 API 키·시크릿, 서명
+    # not \b: Korean letters are \w too, so a key glued to Korean text would slip through
+    # \b를 쓰지 않는다. 한글도 \w라서 한글에 붙은 키가 빠져나간다
+    (re.compile(r"(?<![A-Za-z0-9])[A-Za-z0-9]{48,}(?![A-Za-z0-9])"), "<secret>"),  # exchange API key / secret, signatures / 거래소 API 키·시크릿, 서명
     (re.compile(r"\b(?:\d{1,3}\.){3}\d{1,3}\b"), "<ip>"),                    # IPv4 (server, VPN) / IPv4(서버, VPN)
     (re.compile(r"\$\s?-?[\d,]+(?:\.\d+)?"), "$<amount>"),                   # dollar amounts / 달러 금액
+    (re.compile(r"-?[\d,]*\d(?:\.\d+)?\s?(?=USDT\b)"), "<amount> "),         # '1234.5 USDT' is a dollar amount too / '1234.5 USDT'도 달러 금액이다
     (re.compile(r"(?i)(api[_-]?key|secret|token|password)\s*[=:]\s*\S+"), r"\1=<hidden>"),
 ]
 

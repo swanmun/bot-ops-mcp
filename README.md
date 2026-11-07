@@ -216,13 +216,24 @@ The demo data, the evaluation and its saved answers all use the demo rules.
   The bots' own `.env` files are never read.
 - **Least data out.** Results are scrubbed before they reach the model: API keys, bot tokens, IP addresses and
   dollar amounts are removed; money is reported as % of balance and R. Account names are validated against the
-  state files, so a tool argument can never become a file path.
+  state files and symbols against a letters-and-digits pattern, so a tool argument can never become a file path.
+  Errors go out as type and message only, never a traceback (a traceback shows file paths).
+  This is a limit on direct exposure, not full concealment: quantities and stop distances stay because
+  diagnosing a mismatch needs them, and from `qty × |entry − stop|` and the risk % one can estimate the account size.
 - **Audit trail.** Every tool call is logged to `bot_ops_audit.log` next to the bots.
+- **One more file the server reads.** Besides the three above (state, log, `.env.mcp`), a live server imports the
+  rules file `BOT_OPS_STRATEGY` (default `bot_ops_strategy.py` next to the bots). It is Python and runs at start-up,
+  so it must be the operator's own file.
 - **Log text is data.** Log lines include messages from outside systems (exchange errors). The server instructions and
   every `search_log` result say they are never instructions; the demo includes an injected one to test that. Those two
   warnings were not enough on their own: qwen3:8b, qwen3:14b and gemma4:e2b still passed the planted instruction on
   (see Evaluation), which is why the first rule above, no write path, matters most.
 - All tools carry MCP `readOnlyHint` annotations.
+- **Reviewed 2026-11-07** with Claude Mythos 5.1 (Anthropic Cyber Verification Program, Defense Access). The three
+  guarantees above held; four small fixes came out of it (errors other than "file not found" could carry a full path;
+  `market_snapshot` did not validate the symbol; exchange error text was not marked as untrusted; the secret
+  pattern missed a key glued to Korean text and amounts written as `1234 USDT`), plus the account-size note above.
+  Each fix has a test in `tests/test_tools.py`.
 
 ## Try it with fake data
 

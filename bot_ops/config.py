@@ -41,6 +41,18 @@ DEMO = os.environ.get("BOT_OPS_DEMO", "").lower() in ("1", "true", "yes")
 BOT_DIR = DEMO_DIR / "bots" if DEMO else Path(os.environ.get("BOT_OPS_DIR", PACKAGE_DIR.parent)).resolve()
 
 ACCOUNT_RE = re.compile(r"^[A-Za-z0-9_]{1,40}$")
+SYMBOL_RE = re.compile(r"^[A-Z0-9]{3,20}$")
+
+
+def check_symbol(symbol: str) -> str:
+    """Exchange symbol letters and digits only — never a path or a query. Raises ValueError otherwise.
+
+    [한국어] 거래소 심볼은 영문 대문자와 숫자만. 경로나 쿼리가 될 수 없다. 그 밖에는 ValueError를 낸다.
+    """
+    s = (symbol or "").upper()
+    if not SYMBOL_RE.match(s):
+        raise ValueError(f"bad symbol '{symbol}' (letters and digits only, e.g. BTCUSDT)")
+    return s
 
 
 def _demo_clock() -> dict:
